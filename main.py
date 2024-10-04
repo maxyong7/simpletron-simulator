@@ -84,7 +84,23 @@ class Simpletron:
             print(f"Unknown operation code: {self.operation_code}")
             self.halted = True
 
-# Example of loading a program into the Simpletron.
+    def dump_memory(self):
+        """
+        Prints the current state of the Simpletron's memory, accumulator, and registers.
+        """
+        print("\nREGISTERS:")
+        print(f"Accumulator: {self.accumulator}")
+        print(f"Instruction Counter: {self.instruction_counter}")
+        print(f"Instruction Register: {self.instruction_register}")
+        print(f"Operation Code: {self.operation_code}")
+        print(f"Operand: {self.operand}\n")
+
+        print("MEMORY:")
+        for i in range(0, 100, 10):
+            memory_slice = " ".join(f"{self.memory[j]:+05}" for j in range(i, i + 10))
+            print(f"{i:02}: {memory_slice}")
+
+# Example of loading a program from a file and running it.
 if __name__ == "__main__":
     simpletron = Simpletron()
     
@@ -96,3 +112,6 @@ if __name__ == "__main__":
     
     # Run the Simpletron program
     simpletron.run()
+    
+    # Dump memory after program execution
+    simpletron.dump_memory()
