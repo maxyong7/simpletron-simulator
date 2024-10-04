@@ -69,12 +69,14 @@ class Simpletron:
                 self.accumulator //= self.memory[self.operand]
         elif self.operation_code == 33:  # MULTIPLY
             self.accumulator *= self.memory[self.operand]
-        elif self.operation_code == 34:  # MODULO (New Instruction)
+        elif self.operation_code == 34:  # MODULO
             if self.memory[self.operand] == 0:
                 print("Error: Division by zero.")
                 self.halted = True
             else:
                 self.accumulator %= self.memory[self.operand]
+        elif self.operation_code == 35:  # EXPONENTIATION
+            self.accumulator **= self.memory[self.operand]
         elif self.operation_code == 40:  # BRANCH
             self.instruction_counter = self.operand
         elif self.operation_code == 41:  # BRANCHNEG
