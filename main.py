@@ -53,6 +53,8 @@ class Simpletron:
             self.memory[self.operand] = int(input(f"Enter an integer for memory location {self.operand}: "))
         elif self.operation_code == 11:  # WRITE
             print(f"Memory[{self.operand}] = {self.memory[self.operand]}")
+        elif self.operation_code == 12:  # NEWLINE
+            print()  # Output a newline
         elif self.operation_code == 20:  # LOAD
             self.accumulator = self.memory[self.operand]
         elif self.operation_code == 21:  # STORE
