@@ -8,13 +8,25 @@ class Simpletron:
         self.operand = 0  # The address part of the instruction
         self.halted = False
 
-    def load_program(self, program):
+    def load_program_from_file(self, filename):
         """
-        Load the program into the Simpletron's memory.
-        :param program: List of integers representing SML instructions.
+        Load a Simpletron program from a text file.
+        :param filename: The path to the file containing the program.
         """
-        for i, instruction in enumerate(program):
-            self.memory[i] = instruction
+        try:
+            with open(filename, 'r') as file:
+                for i, line in enumerate(file):
+                    # Strip newlines and convert to integer
+                    instruction = int(line.strip())
+                    if i >= 100:
+                        print("Error: Program exceeds memory size.")
+                        break
+                    self.memory[i] = instruction
+            print("Program loaded successfully.")
+        except FileNotFoundError:
+            print(f"Error: File {filename} not found.")
+        except ValueError:
+            print("Error: Non-numeric instruction encountered in file.")
 
     def run(self):
         """
@@ -74,17 +86,13 @@ class Simpletron:
 
 # Example of loading a program into the Simpletron.
 if __name__ == "__main__":
-    program = [
-        1007,  # READ into memory location 07
-        1008,  # READ into memory location 08
-        2007,  # LOAD memory location 07 into accumulator
-        3008,  # ADD memory location 08 to accumulator
-        2109,  # STORE result into memory location 09
-        1109,  # WRITE memory location 09
-        4300   # HALT
-    ]
-
     simpletron = Simpletron()
-    simpletron.load_program(program)
+    
+    # Request file name from user
+    filename = input("Enter the name of the program file to load: ")
+    
+    # Load the program from the file
+    simpletron.load_program_from_file(filename)
+    
+    # Run the Simpletron program
     simpletron.run()
-    simpletron.dump_memory()
